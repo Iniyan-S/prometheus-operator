@@ -1,0 +1,16 @@
+# Ref: https://github.com/prometheus-operator/prometheus-operator/blob/v0.63.0/example/user-guides/getting-started/example-app-pod-monitor.yaml
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: go-app
+  namespace: dev
+  labels:
+    prometheus: main # used by prometheus.yaml (podMonitorSelector: matchLabels:)
+spec:
+  selector:
+  matchLabels:
+    prometheus.io/scrape: "true"
+  podMetricsEndpoints:
+  - port: web
+    path: /metrics

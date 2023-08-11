@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: go-app
+    namespace: dev 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        prometheus.io/scrape: "true" # Used by Pod Monitor
+    spec:
+      containers:
+      - name: go-app
+        image: quay.io/brancz/prometheus-example-app:v0.3.0 # https://github.com/brancz/prometheus-example-app
+        imagePullPolicy: Always
+        ports:
+        - name: web
+          containerPort: 8080 # Exposes metrics on :8080/metrics
+  
